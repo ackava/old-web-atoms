@@ -1,0 +1,35 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" 
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	viewBox="0 0 100 100">
+	<defs>
+		<g id="orbit1">
+			<path id="orbit1Path"  d="M92,43 a45,15 0 1,0 1,1 z" fill="none" stroke="gray" />
+			<circle r="4" cx="0" cy="0" fill="#ff0000">
+				<animateMotion dur="2s" fill="freeze" repeatCount="indefinite">
+					<mpath xlink:href="#orbit1Path" />
+				</animateMotion>
+			</circle>
+		</g>
+		<g id="orbit2">
+			<path id="Path1"  d="M92,43 a45,15 0 1,0 1,1 z" fill="none" stroke="gray" />
+			<circle r="4" cx="0" cy="0" fill="#ff0000">
+				<animateMotion begin="0.3s" dur="2s" fill="freeze" repeatCount="indefinite">
+					<mpath xlink:href="#orbit1Path" />
+				</animateMotion>
+			</circle>
+		</g>
+		<g id="orbit3">
+			<path id="Path2"  d="M92,43 a45,15 0 1,0 1,1 z" fill="none" stroke="gray" />
+			<circle r="4" cx="0" cy="0" fill="#ff0000">
+				<animateMotion begin="0.6s" dur="2s" fill="freeze" repeatCount="indefinite">
+					<mpath xlink:href="#orbit1Path" />
+				</animateMotion>
+			</circle>
+		</g>
+	</defs>
+	<use x="0" y="0" xlink:href="#orbit1" />
+	<use x="0" y="0" xlink:href="#orbit2" transform="rotate(45 49 49)" />
+	<use x="0" y="0" xlink:href="#orbit3" transform="rotate(-45 49 49)"/>
+
+
+</svg>

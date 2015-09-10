@@ -1,0 +1,174 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".js" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xaml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Xaml" #>
+<#@ import namespace="System.Text" #>
+<# 
+	
+		string templateDirectory = System.IO.Path.GetDirectoryName(Host.TemplateFile);
+
+		///<reference path="WebAtoms.Core.js" />
+		
+		// load all files.. of type .js...
+		JSCodeList codeList = new JSCodeList();
+		ParseDirectory(templateDirectory,codeList, false);
+		//codeList.Sort(codeList.Comparer);
+		foreach(JSCode code in codeList){
+			code.AssignParentReferences(codeList);
+		}
+		
+		JSCodeList orderedList = new JSCodeList();
+		foreach(JSCode code in codeList.OrderBy(x=>x.Index)){
+			orderedList.Add(code, codeList);
+		}
+		
+		foreach(JSCode code in orderedList){
+			foreach(string line in code.Code){
+				string l = line.Trim();
+				if(string.IsNullOrWhiteSpace(l))
+					continue;
+				if(l.StartsWith("//"))
+					continue;
+				WriteLine(l);
+			}
+		}
+
+#>
+<#+ 
+		
+		public void ParseDirectory(string parent, List<JSCode> codeList , bool parseFiles = true){
+			if(parseFiles){
+				foreach(string file in System.IO.Directory.EnumerateFiles(parent,"*.js")){
+					JSCode code = new JSCode();
+					code.FileName = System.IO.Path.GetFileName(file);
+					code.FilePath = file;
+					code.Code = System.IO.File.ReadAllLines(file);
+					
+					code.LoadReferences();
+					codeList.Add(code);
+					if(code.FileName.StartsWith("ZZZZ"))
+						code.Index = int.MaxValue;
+					else
+						code.Index = int.MaxValue - 100;
+				}
+			}
+			
+			foreach(string dir in System.IO.Directory.EnumerateDirectories(parent,"*.*", System.IO.SearchOption.AllDirectories)){
+				ParseDirectory(dir,codeList);
+			}
+			
+		}
+		
+	public class JSCodeList : List<JSCode> {
+
+		public void Add(JSCode code, JSCodeList all){
+			// make sure we have all existing base classes first...
+			foreach(string item in code.References){
+				JSCode parent = all.FirstOrDefault(x=>x.FileName == item);
+				if(parent!=null){
+					Add(parent,all);
+				}
+			}
+			
+			if(!this.Any(x=>x.FileName == code.FileName))
+				this.Add(code);
+			
+		}
+		
+		public IComparer<JSCode> Comparer {
+			get {
+				return new JSCodeListSort(this);
+			}
+		}
+
+		public class JSCodeListSort : IComparer<JSCode> {
+
+			private JSCodeList list;
+
+			public JSCodeListSort(JSCodeList list)
+			{
+				this.list = list;
+			}
+
+			#region public int  Compare(JSCode x, JSCode y)
+			public int Compare(JSCode x, JSCode y)
+			{
+				if(x.FileName.StartsWith("ZZZZZ"))
+					return +1;
+				if(y.FileName.StartsWith("ZZZZZ"))
+					return -1;
+				int n = 0;
+				n = x.IsParent(list,y);
+				if (n>0)
+					return -n;
+				n = y.IsParent(list,x);
+				if(n>0)
+					return n;
+				return 0;
+			}
+			#endregion
+
+		}
+
+	}
+
+	public class JSCode 
+	{
+		public string FilePath { get; set; }
+		public string FileName { get; set; }
+		public string FileNameSmall { get; set; }
+		public string[] Code { get; set; }
+		public string[] References { get; set; }
+		public int Index { get; set; }
+		
+		public void AssignParentReferences(JSCodeList list){
+			foreach(var item in References){
+				JSCode parent = list.FirstOrDefault(x=>x.FileName == item);
+				if(parent!=null){
+					parent.Index = this.Index -1;
+					parent.AssignParentReferences(list);
+				}
+			}
+		}
+
+		public int IsParent(JSCodeList list, JSCode other)
+		{
+			if (other.References.Any(x => x.Equals(this.FileName)))
+				return 1;
+			foreach (var item in other.References)
+			{
+				JSCode parentOther = list.FirstOrDefault(x => x.FileName.Equals(item));
+				if (parentOther != null) {
+					int n = this.IsParent(list, parentOther);
+					if(n>0)
+						return n+1;
+				}
+			}
+			return 0;
+		}
+		
+
+		public void LoadReferences(){
+			List<string> referenceList = new List<string>();
+				foreach(string line in this.Code.Where(x=>x.StartsWith("/// <reference "))){
+					string r = line.Substring(4);
+					XDocument doc = XDocument.Parse(r);
+					string path =  doc.Root.Attribute(XName.Get("path")).Value;
+					path = System.IO.Path.GetFileName(path);
+					referenceList.Add(path);
+				}
+				this.References = referenceList.ToArray();
+		}
+
+	}
+		
+		
+		#>

@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C72D67C1-EC8C-4BEC-A07C-361B7C735ACF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NeuroSpeech.WebAtoms</RootNamespace>
+    <AssemblyName>NeuroSpeech.WebAtoms</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entity\AtomEntity.cs" />
+    <Compile Include="Entity\AtomObjectContext.cs" />
+    <Compile Include="Entity\AtomPropertyDescriptor.cs" />
+    <Compile Include="Entity\Audit\AuditHelper.cs" />
+    <Compile Include="Entity\Audit\Change.cs" />
+    <Compile Include="Entity\Audit\EntityProperty.cs" />
+    <Compile Include="Entity\Audit\FieldValue.cs" />
+    <Compile Include="Entity\Audit\FKPropertyAttribute.cs" />
+    <Compile Include="Entity\Audit\IAuditContext.cs" />
+    <Compile Include="Entity\Audit\IAuditIgnore.cs" />
+    <Compile Include="Entity\Audit\IAuditItem.cs" />
+    <Compile Include="Entity\Audit\LinkValue.cs" />
+    <Compile Include="Entity\BaseSecurityContext.cs" />
+    <Compile Include="Entity\ChangeSet.cs" />
+    <Compile Include="Entity\EntityAccessException.cs" />
+    <Compile Include="Entity\EntityAtomsObjectContextHelper.cs" />
+    <Compile Include="Entity\EntityPropertyRules.cs" />
+    <Compile Include="Entity\ExpressionDictionary.cs" />
+    <Compile Include="Entity\ISecureObjectContext.cs" />
+    <Compile Include="Entity\NavigationExpressionVisitor.cs" />
+    <Compile Include="Entity\PropertyRuleDictionary.cs" />
+    <Compile Include="Entity\SerializeMode.cs" />
+    <Compile Include="IdentityPropertyAttribute.cs" />
+    <Compile Include="Mvc\AtomDataResult.cs" />
+    <Compile Include="Mvc\AtomDictionary.cs" />
+    <Compile Include="Mvc\AtomEntityController.cs" />
+    <Compile Include="Mvc\AtomQueryableResult.cs" />
+    <Compile Include="Mvc\AtomResult.cs" />
+    <Compile Include="Mvc\Atoms.cs" />
+    <Compile Include="Mvc\DBController.cs" />
+    <Compile Include="Mvc\EntityInfo.cs" />
+    <Compile Include="Mvc\JsonErrorResult.cs" />
+    <Compile Include="Mvc\JsonExpression.cs" />
+    <Compile Include="Mvc\JsonValueProvider.cs" />
+    <Compile Include="Mvc\LinqHelper.cs" />
+    <Compile Include="Mvc\WebAtomsController.cs" />
+    <Compile Include="Mvc\WebAtomsMvcHelper.cs" />
+    <Compile Include="Mvc\PropertyCache.cs" />
+    <Compile Include="Mvc\SerializationContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebAtomsHelper.cs" />
+    <Compile Include="WebResourceHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Busy.svg" />
+    <EmbeddedResource Include="Scripts\jwplayer.js" />
+    <EmbeddedResource Include="Content\Flash\FileUploader.swf" />
+    <EmbeddedResource Include="Content\WebAtoms.css">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebAtoms.tt</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\busy.gif" />
+    <EmbeddedResource Include="Content\Icons.png" />
+    <EmbeddedResource Include="Content\buttons\down.png" />
+    <EmbeddedResource Include="Content\buttons\up.png" />
+    <Content Include="Scripts\Controls\AtomAutoCompleteBox.css" />
+    <Content Include="Scripts\Controls\AtomAutoCompleteBox.js" />
+    <Content Include="Scripts\Controls\AtomAutoCompleteBox.template.html" />
+    <Content Include="Scripts\Controls\AtomButton.css" />
+    <Content Include="Scripts\Controls\AtomCheckBoxList.css" />
+    <Content Include="Scripts\Controls\AtomCheckBoxList.itemTemplate.html" />
+    <Content Include="Scripts\Controls\AtomControl.css" />
+    <Content Include="Scripts\Controls\AtomDataPager.css" />
+    <Content Include="Scripts\Controls\AtomDataPager.js" />
+    <Content Include="Scripts\Controls\AtomDataPager.template.html" />
+    <Content Include="Scripts\Controls\AtomDateField.css" />
+    <Content Include="Scripts\Controls\AtomDateField.js" />
+    <Content Include="Scripts\Controls\AtomDateField.popupTemplate.html" />
+    <Content Include="Scripts\Controls\AtomDateListBox.css" />
+    <Content Include="Scripts\Controls\AtomDateListBox.js" />
+    <Content Include="Scripts\Controls\AtomDateListBox.template.html" />
+    <Content Include="Scripts\Controls\AtomDockPanel.css" />
+    <Content Include="Scripts\Controls\AtomFileUploader.template.html" />
+    <Content Include="Scripts\Controls\AtomLinkBar.menuTemplate.html" />
+    <Content Include="Scripts\Controls\AtomNavigatorList.detailTemplate.html" />
+    <Content Include="Scripts\Controls\AtomPhoneControl.css" />
+    <Content Include="Scripts\Controls\AtomSortableColumn.css" />
+    <Content Include="Scripts\Controls\AtomUploadButton.js" />
+    <Content Include="Scripts\Controls\AtomWizard.css" />
+    <Content Include="Scripts\Controls\AtomWizard.js" />
+    <Content Include="Scripts\Controls\AtomWizard.template.html" />
+    <Content Include="Scripts\Core\AtomPopup.js" />
+    <Content Include="Scripts\Core\AtomProperty.js" />
+    <Content Include="Scripts\Core\AtomQuery.js" />
+    <Content Include="Scripts\Core\AtomSkinnedApplication.js" />
+    <Content Include="Scripts\Core\AtomUI.js" />
+    <Content Include="Scripts\Core\ChildEnumerator.js" />
+    <Content Include="Scripts\DataControls\AtomAutoPostForm.js" />
+    <Content Include="Scripts\DataControls\AtomFormField.js" />
+    <Content Include="Scripts\DataControls\AtomFormGrid.css" />
+    <Content Include="Scripts\DataControls\AtomFormGrid.js" />
+    <Content Include="Scripts\DataControls\AtomFormLayout.css" />
+    <Content Include="Scripts\Controls\AtomItemSelector.js" />
+    <Content Include="Scripts\Controls\AtomLabel.js" />
+    <Content Include="Scripts\Controls\AtomItemsControl.itemTemplate.html" />
+    <Content Include="Scripts\Controls\AtomLinkBar.css" />
+    <Content Include="Scripts\Controls\AtomListBox.css" />
+    <Content Include="Scripts\Controls\AtomNavigatorList.css" />
+    <Content Include="Scripts\Controls\AtomNavigatorList.js" />
+    <Content Include="Scripts\Controls\AtomNavigatorList.template.html" />
+    <Content Include="Scripts\Controls\AtomTreeView.js" />
+    <Content Include="Scripts\DataControls\AtomFormLayout.fieldTemplate.html" />
+    <Content Include="Scripts\DataControls\AtomFormVerticalLayout.fieldTemplate.html" />
+    <Content Include="Scripts\DataControls\AtomFormVerticalLayout.js" />
+    <Content Include="Scripts\Data\AtomPromise.js" />
+    <EmbeddedResource Include="Scripts\ie9.js" />
+    <Content Include="Scripts\Window\AtomPanel.js" />
+    <Content Include="Scripts\Window\AtomPanel.template.html" />
+    <Content Include="Scripts\Controls\AtomSortableColumn.js" />
+    <Content Include="Scripts\Controls\AtomSortableColumn.template.html" />
+    <Content Include="Scripts\Controls\AtomTabButtonBar.css" />
+    <Content Include="Scripts\Controls\AtomToggleButtonBar.css" />
+    <Content Include="Scripts\Controls\AtomViewBox.js" />
+    <Content Include="Scripts\Controls\AtomTabButtonBar.js" />
+    <Content Include="Scripts\Controls\AtomLinkBar.itemTemplate.html" />
+    <Content Include="Scripts\Controls\AtomTabControl.js" />
+    <Content Include="Scripts\Controls\AtomTabControl.template.html" />
+    <Content Include="Scripts\Controls\AtomToggleButtonBar.template.html" />
+    <Content Include="Scripts\Controls\AtomViewStack.css" />
+    <Content Include="Scripts\Controls\AtomYesNoCustom.css" />
+    <Content Include="Scripts\Controls\AtomYesNoCustom.template.html" />
+    <Content Include="Scripts\Core\Atom.js" />
+    <Content Include="Scripts\Core\AtomApplication.css" />
+    <Content Include="Scripts\Core\AtomBrowser.js" />
+    <Content Include="Scripts\Core\AtomCachedData.js" />
+    <Content Include="Scripts\Core\AtomEvaluator.js" />
+    <Content Include="Scripts\Core\AtomUIComponent.js" />
+    <Content Include="Scripts\DataControls\AtomFormNoLayout.js" />
+    <Content Include="Scripts\Layouts\AtomCanvasLayout.js" />
+    <Content Include="Scripts\Layouts\AtomViewBoxLayout.js" />
+    <EmbeddedResource Include="Scripts\linq-vsdoc.js" />
+    <EmbeddedResource Include="Scripts\linq.min.js" />
+    <Content Include="Scripts\Players\AtomPhotoPlayer.template.html" />
+    <Content Include="Scripts\Window\AtomWindow.css" />
+    <Content Include="Scripts\Window\AtomWindow.frameTemplate.html" />
+    <Content Include="Scripts\Window\AtomWindow.windowTemplate.html" />
+    <Content Include="Temp\jquery.event.drag.js" />
+    <EmbeddedResource Include="Content\OldWebAtoms.css" />
+    <EmbeddedResource Include="Content\Flash\playerProductInstall.swf" />
+    <Content Include="Scripts\Controls\AtomDeleteButton.js" />
+    <Content Include="Scripts\Controls\AtomPostButton.js" />
+    <Content Include="Scripts\Controls\AtomButton.js" />
+    <Content Include="Scripts\Controls\AtomCheckBox.js" />
+    <Content Include="Scripts\Controls\AtomCheckBoxList.js" />
+    <Content Include="Scripts\Controls\AtomComboBox.js" />
+    <Content Include="Scripts\Controls\AtomControl.js" />
+    <Content Include="Scripts\Controls\AtomDateControl.js" />
+    <Content Include="Scripts\Controls\AtomDockPanel.js" />
+    <Content Include="Scripts\Controls\AtomFileUploader.js" />
+    <Content Include="Scripts\Controls\AtomItemsControl.js" />
+    <Content Include="Scripts\Controls\AtomLinkBar.js" />
+    <Content Include="Scripts\Controls\AtomListBox.js" />
+    <Content Include="Scripts\Controls\AtomMultiButtonList.js" />
+    <Content Include="Scripts\Controls\AtomNumberComboBox.js" />
+    <Content Include="Scripts\Controls\AtomPhoneControl.js" />
+    <Content Include="Scripts\Controls\AtomRadioButtonList.js" />
+    <Content Include="Scripts\Controls\AtomToggleButtonBar.js" />
+    <Content Include="Scripts\Controls\AtomVideoButtonBar.js" />
+    <Content Include="Scripts\Controls\AtomViewStack.js" />
+    <Content Include="Scripts\Controls\AtomYesNoControl.js" />
+    <Content Include="Scripts\Controls\AtomYesNoCustom.js" />
+    <Content Include="Scripts\Core\AtomApplication.js" />
+    <Content Include="Scripts\Core\AtomComponent.js" />
+    <Content Include="Scripts\Core\AtomDispatcher.js" />
+    <Content Include="Scripts\Core\WebAtoms.Core.js" />
+    <Content Include="Scripts\Core\ZZZZZInitializer.js" />
+    <Content Include="Scripts\DataControls\AtomForm.js" />
+    <Content Include="Scripts\DataControls\AtomFormLayout.js" />
+    <Content Include="Scripts\Data\AtomBinding.js" />
+    <Content Include="Scripts\Data\AtomBindingHelper.js" />
+    <EmbeddedResource Include="Scripts\FlashPlayer.js" />
+    <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
+    <EmbeddedResource Include="Scripts\JSON.js" />
+    <Content Include="Scripts\Layouts\AtomLayout.js" />
+    <Content Include="Scripts\Layouts\AtomTableLayout.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <EmbeddedResource Include="Scripts\WebAtoms.Debug.js">
+      <DependentUpon>WebAtoms.Debug.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </EmbeddedResource>
+    <Content Include="Scripts\Players\AtomPhotoPlayer.js" />
+    <Content Include="Scripts\Players\AtomPlayer.js" />
+    <Content Include="Scripts\Players\AtomVideoPlayer.js" />
+    <EmbeddedResource Include="Scripts\WebAtoms.js">
+      <DependentUpon>WebAtoms.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </EmbeddedResource>
+    <Content Include="Scripts\Window\AtomWindow.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Flash\FileUploader.fla" />
+    <Content Include="Scripts\Core\AtomApplication.busyTemplate.html" />
+    <None Include="Content\WebAtoms.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WebAtoms.css</LastGenOutput>
+    </None>
+    <Content Include="Scripts\DataControls\AtomFormGridLayout.fieldTemplate.html" />
+    <None Include="Scripts\WebAtoms.Debug.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WebAtoms.Debug.js</LastGenOutput>
+    </None>
+    <None Include="Scripts\WebAtoms.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WebAtoms.js</LastGenOutput>
+    </None>
+    <None Include="WebAtoms.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Styles\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!--<Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\TextTemplating\v10.0\Microsoft.TextTemplating.targets" />
+  <PropertyGroup>
+    <TransformOnBuild>true</TransformOnBuild>
+    -->
+  <!-- Other properties can be inserted here -->
+  <!--
+  </PropertyGroup>-->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
