@@ -2,3 +2,4 @@ NeuroSpeech.WebAtoms/bin/
 NeuroSpeech.WebAtoms/obj/
 *.nupkg
 Nuget/NeuroSpeech.WebAtoms/obj/
+packages/
