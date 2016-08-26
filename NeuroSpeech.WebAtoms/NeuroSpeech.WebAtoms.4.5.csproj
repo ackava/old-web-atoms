@@ -108,7 +108,6 @@
     <Compile Include="Entity\Audit\LinkValue.cs" />
     <Compile Include="Entity\BaseSecurityContext.cs" />
     <Compile Include="Entity\ChangeSet.cs" />
-    <Compile Include="Entity\DbExceptionLogger.cs" />
     <Compile Include="Entity\DeleteEntityOnRemoveAttribute.cs" />
     <Compile Include="Entity\EntityAccessException.cs" />
     <Compile Include="Entity\EntityPropertyRules.cs" />

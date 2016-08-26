@@ -241,10 +241,10 @@ namespace NeuroSpeech.WebAtoms.Mvc
             foreach (var key in ids.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)))
             {
                 var item = db.Query<T>().WhereKey(key).FirstOrDefault();
-                //InvokeMethod("OnDeleting", item);
+                InvokeMethod("OnDeleting", item);
                 db.DeleteEntity(item);
                 db.Save();
-                //InvokeMethod("OnDeleted", item);
+                InvokeMethod("OnDeleted", item);
             }
             return JsonResult("");
         }
@@ -273,12 +273,12 @@ namespace NeuroSpeech.WebAtoms.Mvc
                 if (item == null) {
                     return JsonError("Failed to Load Entity. " + type.FullName);
                 }
-                //InvokeMethod("OnDeleting", item);
+                InvokeMethod("OnDeleting", item);
 
                 item = (T)db.DeleteEntity(item);
                 db.Save();
 
-                //InvokeMethod("OnDeleted", item);
+                InvokeMethod("OnDeleted", item);
 
                 T retItem = item;
                 return JsonResult(retItem);
@@ -377,9 +377,9 @@ namespace NeuroSpeech.WebAtoms.Mvc
                 var item = db.Query<T>().WhereKey(key).FirstOrDefault();
                 LoadModel(item);
                 var entry = db.GetEntry(item);
-                //InvokeMethod("OnSaving", item, entry);
+                InvokeMethod("OnSaving", item, entry);
                 db.Save();
-                //InvokeMethod("OnSaved", item);
+                InvokeMethod("OnSaved", item);
             }
             return JsonResult("");
         }
@@ -418,11 +418,11 @@ namespace NeuroSpeech.WebAtoms.Mvc
 
                     entry = db.GetEntry(copy);
 
-//                    InvokeMethod("OnSaving", copy, entry);
+                    InvokeMethod("OnSaving", copy, entry);
 
                     db.Save();
 
-  //                  InvokeMethod("OnSaved", copy);
+                    InvokeMethod("OnSaved", copy);
 
                     item = copy;
 
@@ -436,9 +436,9 @@ namespace NeuroSpeech.WebAtoms.Mvc
 
                     OnInserting<T>(item);
 
-                    //InvokeMethod("OnInserting", item);
+                    InvokeMethod("OnInserting", item);
                     db.Save();
-                    //InvokeMethod("OnInserted", item);
+                    InvokeMethod("OnInserted", item);
                 }
 
                 return JsonResult(item);

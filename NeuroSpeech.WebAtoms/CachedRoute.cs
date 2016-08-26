@@ -120,11 +120,9 @@ namespace NeuroSpeech.WebAtoms
                 throw new InvalidOperationException("Please provide full path starting with /");
 
             string v = Version;
-            if (p != "/")
-            {
-                var cv = CacheItems.GetOrAdd(p, k => new CachedFileInfo(k));
-                v = cv.Version;
-            }
+
+            var cv = CacheItems.GetOrAdd(p, k => new CachedFileInfo(k));
+            v = cv.Version;
 
             if (CDNHost != null)
             {
