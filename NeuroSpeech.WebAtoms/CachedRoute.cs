@@ -145,6 +145,7 @@ namespace NeuroSpeech.WebAtoms
                 Response.Cache.SetExpires(DateTime.UtcNow.Add(MaxAge));
                 Response.Cache.SetCacheability(HttpCacheability.Public);
                 Response.Cache.SetMaxAge(MaxAge);
+                Response.Cache.SetSlidingExpiration(true);
             }
             else
             {
