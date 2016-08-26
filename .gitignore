@@ -6,3 +6,4 @@ packages/
 /Nuget/NeuroSpeech.WebAtoms/bin/Debug
 *.suo
 /Nuget/NeuroSpeech.WebAtoms/NuGet.log
+*.bak
