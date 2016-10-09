@@ -10,6 +10,7 @@ using System.IO;
 using System.Web.UI;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace NeuroSpeech.WebAtoms
 {
@@ -142,7 +143,7 @@ namespace NeuroSpeech.WebAtoms
             var Response = context.Response;
             if (Enabled)
             {
-                Response.Cache.SetExpires(DateTime.UtcNow.Add(MaxAge));
+                //Response.Cache.SetExpires(DateTime.UtcNow.Add(MaxAge));
                 Response.Cache.SetCacheability(HttpCacheability.Public);
                 Response.Cache.SetMaxAge(MaxAge);
                 Response.Cache.SetSlidingExpiration(true);
@@ -163,10 +164,44 @@ namespace NeuroSpeech.WebAtoms
             var file = new FileInfo(context.Server.MapPath("/" + FilePath));
             if (!file.Exists)
             {
-                Response.StatusCode = 404;
-                Response.StatusDescription = "Not Found by CachedRoute";
-                Response.ContentType = "text/plain";
-                Response.Output.Write("File not found by CachedRoute at " + file.FullName);
+
+                using (var client = new HttpClient()) {
+
+                    var url = new UriBuilder(context.Request.Url);
+                    url.Path = "/" + FilePath;
+
+                    var r = await client.GetAsync(url.ToString(), HttpCompletionOption.ResponseHeadersRead);
+
+                    string ct = "text/html";
+
+                    if (r.IsSuccessStatusCode) {
+                        Response.Cache.SetCacheability(HttpCacheability.Public);
+                        Response.Cache.SetMaxAge(TimeSpan.FromDays(30));
+                        Response.Cache.SetSlidingExpiration(true);
+                        Response.StatusCode = 200;
+                        if (r.Content.Headers.ContentType != null) {
+                            ct = r.Content.Headers.ContentType.ToString();
+                        }
+                    }
+                    else
+                    {
+                        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                        Response.StatusCode = (int)r.StatusCode;
+                        Response.StatusDescription = r.ReasonPhrase;
+                    }
+
+                    Response.ContentType = ct;
+
+                    var s = await r.Content.ReadAsStreamAsync();
+
+                    await s.CopyToAsync(Response.OutputStream);
+                }
+
+
+                //Response.StatusCode = 404;
+                //Response.StatusDescription = "Not Found by CachedRoute";
+                //Response.ContentType = "text/plain";
+                //Response.Output.Write("File not found by CachedRoute at " + file.FullName);
                 return;
                 
             }
