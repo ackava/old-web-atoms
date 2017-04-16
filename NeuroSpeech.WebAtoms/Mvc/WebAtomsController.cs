@@ -22,17 +22,31 @@ namespace NeuroSpeech.WebAtoms.Mvc
         ISecureRepository Repository { get; }
     }
 
-	public abstract class WebAtomsController<TOC> : Controller, ISecureRepositoryController
+    public abstract class SecureRepositoryFactory
+    {
+        public abstract T New<T>();
+
+        public static SecureRepositoryFactory Factory { get; set; }
+    }
+
+    public abstract class WebAtomsController<TOC> : Controller, ISecureRepositoryController
 		where TOC : ISecureRepository
 	{
 		public TOC ObjectContext { get; private set; }
 
-		public WebAtomsController()
+        public WebAtomsController()
 		{
-			ObjectContext = Activator.CreateInstance<TOC>();
+            if (SecureRepositoryFactory.Factory == null)
+            {
+                ObjectContext = Activator.CreateInstance<TOC>();
+            }
+            else
+            {
+                ObjectContext = SecureRepositoryFactory.Factory.New<TOC>();
+            }
 
 
-		}
+        }
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
