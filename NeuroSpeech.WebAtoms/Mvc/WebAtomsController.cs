@@ -380,8 +380,12 @@ namespace NeuroSpeech.WebAtoms.Mvc
                     return JsonError(tex.InnerException.Message);
                 }
                 Log(tex);
-                if (this.Request.IsAjaxRequest() || string.Compare(this.Request.HttpMethod, "post", true) == 0) {
-                    return JsonError(tex.Message);
+                if (this.Request != null)
+                {
+                    if (this.Request.IsAjaxRequest() || string.Compare(this.Request.HttpMethod, "post", true) == 0)
+                    {
+                        return JsonError(tex.Message);
+                    }
                 }
                 throw;
             }
@@ -392,9 +396,13 @@ namespace NeuroSpeech.WebAtoms.Mvc
             catch (Exception ex)
             {
                 Log(ex);
-                if (this.Request.IsAjaxRequest() || string.Compare(this.Request.HttpMethod, "post", true) == 0)
+                // for unit testing 
+                if (this.Request != null)
                 {
-                    return JsonError(ex.Message);
+                    if (this.Request.IsAjaxRequest() || string.Compare(this.Request.HttpMethod, "post", true) == 0)
+                    {
+                        return JsonError(ex.Message);
+                    }
                 }
                 throw;
             }
