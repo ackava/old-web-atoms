@@ -22,14 +22,28 @@ namespace NeuroSpeech.WebAtoms.Mvc
         ISecureRepository Repository { get; }
     }
 
+    public interface IRepositoryFactory {
+        T New<T>();
+    }
+
 	public abstract class WebAtomsController<TOC> : Controller, ISecureRepositoryController
 		where TOC : ISecureRepository
 	{
+
+        public static IRepositoryFactory Factory { get; set; }
+        
+
 		public TOC ObjectContext { get; private set; }
 
 		public WebAtomsController()
 		{
-			ObjectContext = Activator.CreateInstance<TOC>();
+            if (Factory == null)
+            {
+                ObjectContext = Activator.CreateInstance<TOC>();
+            }
+            else {
+                ObjectContext = Factory.New<TOC>();
+            }
 
 
 		}
