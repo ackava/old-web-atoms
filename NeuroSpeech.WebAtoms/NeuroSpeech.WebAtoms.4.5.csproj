@@ -53,9 +53,6 @@
       <Private>True</Private>
       <HintPath>..\..\..\..\..\Incubators\CRM\Source\CrmApp\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="NeuroSpeech.CoreDI, Version=1.0.14.35411, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NeuroSpeech.CoreDI.1.0.14\lib\NeuroSpeech.CoreDI.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />

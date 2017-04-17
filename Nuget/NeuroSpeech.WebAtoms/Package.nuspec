@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>NeuroSpeech.WebAtoms</id>
-    <version>1.2.205</version>
+    <version>1.2.206</version>
     <title>[Deprecated] NeuroSpeech.WebAtoms</title>
     <authors>akash.kava</authors>
     <owners></owners>
@@ -23,7 +23,6 @@
     <dependencies>
         <group targetFramework="net40">
           <dependency id="EntityFramework" version="6.0" />
-          <dependency id="NeuroSpeech.CoreDI" version="1.0.14"/>
         </group>
     </dependencies>
     <references></references>
