@@ -78,7 +78,13 @@ namespace NeuroSpeech.WebAtoms.Mvc
                         continue;
                     }else
                     {
-                        val = Convert.ChangeType(val, pt);
+                        try
+                        {
+                            val = Convert.ChangeType(val, pt);
+                        }
+                        catch (Exception ex) {
+                            throw new InvalidOperationException("Failed to convert value " + val + " to " + pt.FullName + " for " + p.Name, ex);
+                        }
                     }
                 }
 
