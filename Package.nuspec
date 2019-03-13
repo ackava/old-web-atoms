@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>NeuroSpeech.WebAtoms</id>
+    <version>1.2.207</version>
+    <title>[Deprecated] NeuroSpeech.WebAtoms</title>
+    <authors>akash.kava</authors>
+    <owners></owners>
+    <description>
+      [Deprecated] Please use Atoms.js instead, this is only for use in old projects.
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>
+      [Deprecated] Please use Atoms.js instead, this is only for use in old projects.
+    </summary>
+    <language>en-US</language>
+    <projectUrl>https://nuget.org/packages/NeuroSpeech.WebAtoms</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+    <copyright>Copyright  2014</copyright>
+    <dependencies>
+        <group targetFramework="net40">
+          <dependency id="EntityFramework" version="6.0" />
+        </group>
+    </dependencies>
+    <references></references>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="NeuroSpeech.WebAtoms\bin\Debug4.5\NeuroSpeech.WebAtoms.dll" target="lib" />
+    <file src="NeuroSpeech.WebAtoms\bin\Debug4.5\NeuroSpeech.WebAtoms.pdb" target="lib" />
+  </files>
+</package>
