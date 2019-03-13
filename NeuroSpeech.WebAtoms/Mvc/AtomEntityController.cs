@@ -161,7 +161,12 @@ namespace NeuroSpeech.WebAtoms.Mvc
             if (!string.IsNullOrWhiteSpace(fields))
             {
                 var d = PrepareFields<T>(fields);
-                rq = aq.SelectDynamic(d).Cast<object>().ToList();
+                var list = new List<object>();
+                foreach (var obj in aq.SelectDynamic(d))
+                {
+                    list.Add(obj);
+                }
+                rq = list;
             } else {
                 rq = aq.ToList();
             }

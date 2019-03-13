@@ -7,3 +7,4 @@ packages/
 *.suo
 /Nuget/NeuroSpeech.WebAtoms/NuGet.log
 *.bak
+/.vs/NeuroSpeech.WebAtoms/v15/Server/sqlite3
