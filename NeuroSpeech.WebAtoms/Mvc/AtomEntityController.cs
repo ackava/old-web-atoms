@@ -156,12 +156,14 @@ namespace NeuroSpeech.WebAtoms.Mvc
                 }
             }
 
-            IQueryable rq = aq;
+            object rq = aq;
 
             if (!string.IsNullOrWhiteSpace(fields))
             {
                 var d = PrepareFields<T>(fields);
-                rq = aq.SelectDynamic(d);
+                rq = aq.SelectDynamic(d).Cast<object>().ToList();
+            } else {
+                rq = aq.ToList();
             }
 
             try
