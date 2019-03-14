@@ -15,15 +15,21 @@ using NeuroSpeech.WebAtoms.Linq;
 using NeuroSpeech.WebAtoms;
 using System.Linq.Expressions;
 using System.Data.Entity.Core.Objects.DataClasses;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Data.Entity.Spatial;
 
 namespace System.Web.Mvc
 {
+
+
     public class AtomJavaScriptSerializer : IJavaScriptSerializer {
 
-    		private JavaScriptSerializer JS = new JavaScriptSerializer();
+    	private JavaScriptSerializer JS = new JavaScriptSerializer();
 
-    		//List<object> tree = null;
-    		bool json = true;
+        //List<object> tree = null;
+        bool json = true;
 
             private BaseSecurityContext SecurityContext = null;
 
@@ -42,6 +48,9 @@ namespace System.Web.Mvc
     			{
     				return QuotedString((string)obj);
     			}
+                if (obj is JToken jo) {
+                    return jo.ToString(Formatting.None);
+                }
     			if (obj is DateTime)
     			{
     				DateTime val = (DateTime)obj;
