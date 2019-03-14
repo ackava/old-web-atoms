@@ -48,8 +48,8 @@ namespace System.Web.Mvc
     			{
     				return QuotedString((string)obj);
     			}
-                if (obj is JToken jo) {
-                    return jo.ToString(Formatting.None);
+                if (obj is JToken) {
+                    return ((JToken)obj).ToString(Formatting.None);
                 }
     			if (obj is DateTime)
     			{
