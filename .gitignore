@@ -8,3 +8,4 @@ packages/
 /Nuget/NeuroSpeech.WebAtoms/NuGet.log
 *.bak
 /.vs/NeuroSpeech.WebAtoms/v15/Server/sqlite3
+/.vs/NeuroSpeech.WebAtoms/v16/Server/sqlite3
