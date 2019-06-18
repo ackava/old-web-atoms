@@ -41,7 +41,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
             return (ActionResult)GenericMethods.InvokeGeneric(this, "ParentEntity", new Type[] { entityType,p.PropertyType }, p, id);
         }
 
-        protected virtual ActionResult ParentEntity<T, TC>(PropertyInfo p, string id) 
+        public virtual ActionResult ParentEntity<T, TC>(PropertyInfo p, string id) 
             where T:class
             where TC:class
         {
@@ -67,7 +67,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
 
         }
 
-        protected virtual ActionResult ChildEntities<T,CT>(PropertyInfo p, string id, string query, string orderBy, string fields, int start, int size) 
+        public virtual ActionResult ChildEntities<T,CT>(PropertyInfo p, string id, string query, string orderBy, string fields, int start, int size) 
             where T:class 
             where CT:class
         {
@@ -95,7 +95,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
             return JsonResult(q.ToList());
         }
 
-        protected virtual ActionResult QueryEntity<T>(string query, string fields, string orderBy, int start, int size)
+        public virtual ActionResult QueryEntity<T>(string query, string fields, string orderBy, int start, int size)
             where T : class
         {
             string includeList = Request.QueryString["include"] ?? "";
@@ -217,7 +217,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
             return d;
         }
 
-        protected virtual ActionResult GetEntity<T>(string query, string fields, string orderBy)
+        public virtual ActionResult GetEntity<T>(string query, string fields, string orderBy)
             where T : class
         {
             var aq = db.Query<T>().WhereJsonQuery(query, db);
@@ -237,7 +237,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
             return JsonResult(aq.FirstOrDefault());
         }
 
-        protected virtual ActionResult BulkDeleteEntity<T>() 
+        public virtual ActionResult BulkDeleteEntity<T>() 
             where T:class
         {
             BulkModel model = GetModel<BulkModel>();
@@ -258,7 +258,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
 
         
 
-        protected virtual ActionResult DeleteEntity<T>()
+        public virtual ActionResult DeleteEntity<T>()
             where T : class
         {
             return Invoke(db =>
@@ -292,7 +292,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
             });
         }
 
-        protected virtual ActionResult MoveEntity<T>(
+        public virtual ActionResult MoveEntity<T>(
             string query,
             string direction = "up",
             string orderBy = "SortOrder",
@@ -372,7 +372,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
             public string IDs { get; set; }
         }
 
-        protected virtual ActionResult BulkSaveEntity<T>() 
+        public virtual ActionResult BulkSaveEntity<T>() 
             where T:class
         {
 
@@ -391,7 +391,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
             return JsonResult("");
         }
 
-        protected virtual ActionResult SaveEntity<T>()
+        public virtual ActionResult SaveEntity<T>()
             where T : class
         {
             return Invoke(db =>
