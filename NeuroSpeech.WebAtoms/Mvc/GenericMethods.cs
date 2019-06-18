@@ -54,7 +54,13 @@ namespace NeuroSpeech.WebAtoms.Mvc
 
 
             ParameterExpression pe = Expression.Parameter(typeof(object));
-            MethodInfo m = instanceType.GetMethods().FirstOrDefault(x=> x.IsGenericMethod && x.Name == name).MakeGenericMethod(types);
+            MethodInfo m = instanceType
+                .GetMethods(BindingFlags.Instance 
+                    | BindingFlags.Public 
+                    | BindingFlags.NonPublic 
+                    | BindingFlags.FlattenHierarchy)
+                .FirstOrDefault(x=> x.IsGenericMethod && x.Name == name)
+                .MakeGenericMethod(types);
             ParameterExpression peArray = Expression.Parameter(typeof(object[]));
             List<Expression> ps = new List<Expression>();
             int i = 0;

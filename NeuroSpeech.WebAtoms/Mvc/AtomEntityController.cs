@@ -21,6 +21,12 @@ using System.Data.Entity.Core.Objects.DataClasses;
 namespace NeuroSpeech.WebAtoms.Mvc
 {
 
+    public class GenericInvoker
+    {
+
+        // public ActionResult Invoke<T>(Func<)
+
+    } 
 
 
     [ValidateInput(false)]
@@ -38,7 +44,17 @@ namespace NeuroSpeech.WebAtoms.Mvc
         public virtual ActionResult Parent(string table, string id, string property) {
             Type entityType = GetType(ObjectContext, table);
             PropertyInfo p = entityType.GetProperty(property);
-            return (ActionResult)GenericMethods.InvokeGeneric(this, "ParentEntity", new Type[] { entityType,p.PropertyType }, p, id);
+            
+            return (ActionResult)InvokeGeneric( "ParentEntity", new Type[] { entityType,p.PropertyType }, p, id);
+        }
+
+        private ActionResult InvokeGeneric(string v, Type[] type, PropertyInfo p, params object[] args)
+        {
+            return (ActionResult)GetType().GetMethod(v).MakeGenericMethod(type).Invoke(this, args);
+        }
+        private ActionResult InvokeGeneric(string v, Type type, params object[] args)
+        {
+            return (ActionResult)GetType().GetMethod(v).MakeGenericMethod(type).Invoke(this, args);
         }
 
         protected virtual ActionResult ParentEntity<T, TC>(PropertyInfo p, string id) 
@@ -56,7 +72,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
         public virtual ActionResult Children(string table, string id, string property, string query, string orderBy, string fields, int start = 0, int size = -1) {
             Type entityType = GetType(ObjectContext, table);
             PropertyInfo p = entityType.GetProperty(property);
-            return (ActionResult)GenericMethods.InvokeGeneric(this, "ChildEntities", new Type[] { entityType, p.PropertyType.GetGenericArguments()[0]},
+            return (ActionResult)InvokeGeneric( "ChildEntities", new Type[] { entityType, p.PropertyType.GetGenericArguments()[0]},
                 p,
                 id,
                 query,
@@ -525,7 +541,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
 
             Type type = GetType(this.ObjectContext, table);
 
-            return (ActionResult)GenericMethods.InvokeGeneric(this, "QueryEntity", type, query, fields, orderBy, start, size);
+            return (ActionResult)InvokeGeneric( "QueryEntity", type, query, fields, orderBy, start, size);
 
             //return (ActionResult)GetType().GetMethod("QueryEntity").MakeGenericMethod(type).Invoke(this, new object[] { query, fields, orderBy, start, size });
 
@@ -535,7 +551,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
         {
 
             Type type = GetType(this.ObjectContext, table);
-            return (ActionResult)GenericMethods.InvokeGeneric(this, "MoveEntity", type, query, direction, orderBy, index);
+            return (ActionResult)InvokeGeneric( "MoveEntity", type, query, direction, orderBy, index);
 
         }
 
@@ -543,33 +559,33 @@ namespace NeuroSpeech.WebAtoms.Mvc
         {
             Type type = GetType(this.ObjectContext, table);
 
-            return (ActionResult)GenericMethods.InvokeGeneric(this, "GetEntity", type, query, fields, orderBy);
+            return (ActionResult)InvokeGeneric( "GetEntity", type, query, fields, orderBy);
         }
 
         public ActionResult BulkSave(string table) {
             Type type = GetType(this.ObjectContext, table);
-            return (ActionResult)GenericMethods.InvokeGeneric(this, "BulkSaveEntity", type);
+            return (ActionResult)InvokeGeneric( "BulkSaveEntity", type);
         }
 
         public ActionResult Save(string table)
         {
             Type type = GetType(this.ObjectContext, table);
             //return (ActionResult)GetType().GetMethod("SaveEntity").MakeGenericMethod(type).Invoke(this, new object[] { });
-            return (ActionResult)GenericMethods.InvokeGeneric(this, "SaveEntity", type);
+            return (ActionResult)InvokeGeneric( "SaveEntity", type);
         }
 
         public ActionResult BulkDelete(string table)
         {
             Type type = GetType(this.ObjectContext, table);
             //return (ActionResult)GetType().GetMethod("BulkDeleteEntity").MakeGenericMethod(type).Invoke(this, new object[] { });
-            return (ActionResult)GenericMethods.InvokeGeneric(this, "BulkDeleteEntity", type);
+            return (ActionResult)InvokeGeneric( "BulkDeleteEntity", type);
         }
 
         public ActionResult Delete(string table)
         {
             Type type = GetType(this.ObjectContext, table);
             //return (ActionResult)GetType().GetMethod("DeleteEntity").MakeGenericMethod(type).Invoke(this, new object[] { });
-            return (ActionResult)GenericMethods.InvokeGeneric(this, "DeleteEntity", type);
+            return (ActionResult)InvokeGeneric( "DeleteEntity", type);
         }
 
         private static ThreadSafeDictionary<string, Type> typeCache = new ThreadSafeDictionary<string, Type>();
@@ -733,13 +749,12 @@ namespace NeuroSpeech.WebAtoms.Mvc
                     Type clrType = GetType(ObjectContext, entityType);
                     object dbEntity;
                     object id = entity.id;
-                    dynamic os = GenericMethods.InvokeGeneric(ObjectContext, "GetObjectSet", clrType);
                     if (id == null)
                     {
                         dbEntity = Activator.CreateInstance(clrType);
                         ((AtomEntity)dbEntity).ObjectContext = db;
                         LoadModel(dbEntity, entity.changes);
-                        os.AddObject((dynamic)dbEntity);
+                        ObjectContext.AddEntity(dbEntity);
                         changes.Add(dbEntity);
                     }
                     else
@@ -792,8 +807,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
                         {
                             object co = child;
                             Type t = co.GetType();
-                            dynamic os = GenericMethods.InvokeGeneric(ObjectContext, "GetObjectSet", t);
-                            os.DeleteObject(child);
+                            ObjectContext.DeleteEntity(child);
                         }
                     }
                 }
