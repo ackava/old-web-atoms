@@ -44,6 +44,14 @@ namespace NeuroSpeech.WebAtoms.Mvc
             c.LoadModel(model, data);
         }
 
+        [Obsolete("Replace this with model")]
+        public static T FormValue<Tx, T>(this WebAtomsController<Tx> c, string name, bool optional = false, T defValue = default(T))
+            where Tx : ISecureRepository
+            where T : class
+        {
+            return c.FormValue<T>(name, optional, defValue);
+        }
+
     }
 
     public interface ISecureRepositoryController {
@@ -104,7 +112,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
 		}
 
         [Obsolete("Replace this method with model")]
-		public T FormValue<T>(string name, bool optional = false, T defValue = default(T)) {
+		protected internal T FormValue<T>(string name, bool optional = false, T defValue = default(T)) {
 			object val = null;
 			if (!FormModel.TryGetValue(name, out val)) { 
 				if(!optional)
