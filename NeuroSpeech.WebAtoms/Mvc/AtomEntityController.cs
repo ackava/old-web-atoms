@@ -50,11 +50,11 @@ namespace NeuroSpeech.WebAtoms.Mvc
 
         private ActionResult InvokeGeneric(string v, Type[] type, PropertyInfo p, params object[] args)
         {
-            return (ActionResult)GetType().GetMethod(v).MakeGenericMethod(type).Invoke(this, args);
+            return (ActionResult)GetType().GetMethod(v, BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(type).Invoke(this, args);
         }
         private ActionResult InvokeGeneric(string v, Type type, params object[] args)
         {
-            return (ActionResult)GetType().GetMethod(v).MakeGenericMethod(type).Invoke(this, args);
+            return (ActionResult)GetType().GetMethod(v, BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(type).Invoke(this, args);
         }
 
         protected virtual ActionResult ParentEntity<T, TC>(PropertyInfo p, string id) 
