@@ -18,6 +18,34 @@ using System.Web.WebPages;
 namespace NeuroSpeech.WebAtoms.Mvc
 {
 
+    public static class MvcControllerHelper
+    {
+        public static T GetModel<Tx, T>(this WebAtomsController<Tx> c)
+            where Tx: ISecureRepository
+            where T: class
+        {
+            return c.GetModel<T>();
+        }
+
+        public static void LoadModel<Tx>(this WebAtomsController<Tx> c, object model, AtomDictionary values)
+            where Tx : ISecureRepository
+        {
+            c.LoadModel(model, values.InternalDictionary);
+        }
+
+        /// <summary>
+        /// Loads model ignoring ScriptIgnore and XmlIgnore Attributes...
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        public static void LoadModel<Tx>(this WebAtomsController<Tx> c, object model, Dictionary<string, object> data = null)
+            where Tx : ISecureRepository
+        {
+            c.LoadModel(model, data);
+        }
+
+    }
+
     public interface ISecureRepositoryController {
         ISecureRepository Repository { get; }
     }
@@ -92,7 +120,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
 		}
 
 
-        public T GetModel<T>()
+        protected internal T GetModel<T>()
             where T:class
         {
 
@@ -147,7 +175,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
         //}
 
 
-        public virtual void LoadModel(object model, AtomDictionary values) {
+        protected internal virtual void LoadModel(object model, AtomDictionary values) {
             LoadModel(model, values.InternalDictionary);
         }
 
@@ -156,7 +184,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="model"></param>
-        public virtual void LoadModel(object model, Dictionary<string, object> data = null)
+        protected internal virtual void LoadModel(object model, Dictionary<string, object> data = null)
         {
             if (data == null) {
                 data = FormModel;
