@@ -47,7 +47,6 @@ namespace NeuroSpeech.WebAtoms.Mvc
         [Obsolete("Replace this with model")]
         public static T FormValue<Tx, T>(this WebAtomsController<Tx> c, string name, bool optional = false, T defValue = default(T))
             where Tx : ISecureRepository
-            where T : class
         {
             return c.FormValue<T>(name, optional, defValue);
         }
