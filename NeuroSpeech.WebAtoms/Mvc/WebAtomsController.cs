@@ -76,7 +76,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
 		}
 
         [Obsolete("Replace this method with model")]
-		protected T FormValue<T>(string name, bool optional = false, T defValue = default(T)) {
+		public T FormValue<T>(string name, bool optional = false, T defValue = default(T)) {
 			object val = null;
 			if (!FormModel.TryGetValue(name, out val)) { 
 				if(!optional)
@@ -92,7 +92,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
 		}
 
 
-        protected T GetModel<T>()
+        public T GetModel<T>()
             where T:class
         {
 
@@ -147,7 +147,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
         //}
 
 
-        protected virtual void LoadModel(object model, AtomDictionary values) {
+        public virtual void LoadModel(object model, AtomDictionary values) {
             LoadModel(model, values.InternalDictionary);
         }
 
@@ -156,7 +156,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="model"></param>
-        protected virtual void LoadModel(object model, Dictionary<string, object> data = null)
+        public virtual void LoadModel(object model, Dictionary<string, object> data = null)
         {
             if (data == null) {
                 data = FormModel;
