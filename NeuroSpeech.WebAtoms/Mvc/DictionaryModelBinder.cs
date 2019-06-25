@@ -67,6 +67,8 @@ namespace NeuroSpeech.WebAtoms.Mvc
                             if (iList != null)
                             {
                                 bool? isObject = null;
+                                Type listType = src.GetType();
+                                Type itemType = listType.GetElementType() ?? listType.GetGenericArguments()[0];
                                 foreach (object childItem in (System.Collections.IList)val)
                                 {
                                     if (isObject == null)
@@ -80,7 +82,21 @@ namespace NeuroSpeech.WebAtoms.Mvc
                                     }
                                     else
                                     {
-                                        iList.Add(childItem);
+                                        if (childItem != null)
+                                        {
+                                            if (childItem.GetType() != itemType)
+                                            {
+                                                iList.Add(Convert.ChangeType(childItem, itemType));
+                                            }
+                                            else
+                                            {
+                                                iList.Add(childItem);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            iList.Add(childItem);
+                                        }
                                     }
                                     //iList.Add(childItem);
                                 }
