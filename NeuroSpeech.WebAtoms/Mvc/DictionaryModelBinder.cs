@@ -66,9 +66,14 @@ namespace NeuroSpeech.WebAtoms.Mvc
                             var iList = src as System.Collections.IList;
                             if (iList != null)
                             {
+                                bool? isObject = null;
                                 foreach (object childItem in (System.Collections.IList)val)
                                 {
-                                    if (childItem is IDictionary<string, object> d) {
+                                    if (isObject == null)
+                                    {
+                                        isObject = childItem is IDictionary<string, object>;
+                                    }
+                                    if (isObject.Value) {
                                         var child = Activator.CreateInstance(objectType);
                                         iList.Add(child);
                                         Bind(child, childItem as IDictionary<string, object>);
