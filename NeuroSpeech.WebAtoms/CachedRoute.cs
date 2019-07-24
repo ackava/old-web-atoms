@@ -113,6 +113,15 @@ namespace NeuroSpeech.WebAtoms
 
         private static ConcurrentDictionary<string, CachedFileInfo> CacheItems = new ConcurrentDictionary<string, CachedFileInfo>();
 
+        public static string CORSHeaders = string.Join(",", new string[] {
+            "Accept",
+            "If-Modified-Since",
+            "Origin",
+            "Referer",
+            "User-Agent",
+            "Cache-Control"
+        });
+
         public static HtmlString CachedUrl(string p)
         {
             //if (!Enabled)
@@ -157,6 +166,7 @@ namespace NeuroSpeech.WebAtoms
             if (CORSOrigins != null)
             {
                 Response.Headers.Add("Access-Control-Allow-Origin", CORSOrigins);
+                Response.Headers.Add("Access-Control-Allow-Headers", CORSHeaders);
             }
 
             string FilePath = context.Items["FilePath"] as string;
