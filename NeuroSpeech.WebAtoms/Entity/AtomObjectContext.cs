@@ -52,8 +52,6 @@ namespace NeuroSpeech.WebAtoms.Entity
 
         protected virtual void Initialize() {
 
-            PostSaveActions = new List<Action>();
-
             this.ObjectMaterialized += AtomObjectContext_ObjectMaterialized;
         }
 
@@ -140,7 +138,18 @@ namespace NeuroSpeech.WebAtoms.Entity
             }
         }
 
-        public List<Action> PostSaveActions { get; private set; }
+        List<Action> postSaveActions;
+        public List<Action> PostSaveActions
+        {
+            get
+            {
+                return (postSaveActions ?? (postSaveActions = new List<Action>()));
+            }
+            private set
+            {
+                postSaveActions = value;
+            }
+        }
 
         public override int SaveChanges(SaveOptions options)
         {
