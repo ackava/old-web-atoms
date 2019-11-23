@@ -11,6 +11,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Transactions;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -149,6 +151,66 @@ namespace NeuroSpeech.WebAtoms.Entity
             {
                 postSaveActions = value;
             }
+        }
+
+        public override async Task<int> SaveChangesAsync(SaveOptions options, CancellationToken cancellationToken)
+        {
+            ChangeSet cs = new ChangeSet(this);
+
+            OnBeforeValidate(cs);
+
+            ValidateChanges(cs);
+
+            int results = 0;
+
+            using (var scope = CreateTransaction())
+            {
+
+                // for modify and add , validate properties...
+                if (SecurityContext != null)
+                {
+                    SecurityContext.ValidateBeforeSave(this, cs);
+                }
+
+                // Uncomment following line to turn on the Auditing
+
+                OnBeforeSave(cs);
+
+                if (AuditContext != null)
+                {
+                    cs.BeginAudit();
+                }
+
+                results = await base.SaveChangesAsync(options, cancellationToken);
+
+                OnAfterSave(cs);
+
+                if (AuditContext != null)
+                {
+                    cs.EndAudit(AuditContext);
+                }
+
+
+                if (SecurityContext != null)
+                {
+                    SecurityContext.ValidateAfterSave(this, cs);
+                }
+
+
+                scope.Complete();
+            }
+
+            if (PostSaveActions.Count > 0)
+            {
+                var list = PostSaveActions.ToList();
+                PostSaveActions.Clear();
+                foreach (var item in list)
+                {
+                    item();
+                }
+            }
+
+            return results;
         }
 
         public override int SaveChanges(SaveOptions options)
