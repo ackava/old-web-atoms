@@ -72,19 +72,43 @@ namespace NeuroSpeech.WebAtoms.Entity
             return new WrappedTransaction(level,t);
         }
 
+        public WrappedTransaction CreateTransactionAsync(System.Transactions.IsolationLevel level = System.Transactions.IsolationLevel.Serializable,
+            TimeSpan? t = null)
+        {
+            if (t == null) t = TimeSpan.FromMinutes(1);
+            return new WrappedTransaction(level, t, true);
+        }
         public class WrappedTransaction : IDisposable
         {
 
             public TransactionScope Scope { get; private set; }
 
-            public WrappedTransaction(System.Transactions.IsolationLevel isolation = System.Transactions.IsolationLevel.Serializable, TimeSpan? t = null)
+            public WrappedTransaction(System.Transactions.IsolationLevel isolation = System.Transactions.IsolationLevel.Serializable, TimeSpan? t = null): this(isolation, t, false)
+            {
+                
+            }
+
+            public WrappedTransaction(System.Transactions.IsolationLevel isolation = System.Transactions.IsolationLevel.Serializable, TimeSpan? t = null, bool asyncEnabled = false)
             {
                 if (Transaction.Current == null)
                 {
-                    Scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { 
-                        IsolationLevel = isolation,
-                        Timeout = t == null ? TimeSpan.FromMinutes(1) : t.Value
-                    });
+                    if (asyncEnabled)
+                    {
+                        Scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions
+                        {
+                            IsolationLevel = isolation,
+                            Timeout = t == null ? TimeSpan.FromMinutes(1) : t.Value
+                        }, TransactionScopeAsyncFlowOption.Enabled);
+
+                    }
+                    else
+                    {
+                        Scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions
+                        {
+                            IsolationLevel = isolation,
+                            Timeout = t == null ? TimeSpan.FromMinutes(1) : t.Value
+                        });
+                    }
                 }
             }
 
@@ -163,7 +187,7 @@ namespace NeuroSpeech.WebAtoms.Entity
 
             int results = 0;
 
-            using (var scope = CreateTransaction())
+            using (var scope = CreateTransactionAsync())
             {
 
                 // for modify and add , validate properties...
