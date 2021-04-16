@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuroSpeech.WebAtoms.4.5", "NeuroSpeech.WebAtoms\NeuroSpeech.WebAtoms.4.5.csproj", "{C72D67C1-EC8C-4BEC-A07C-361B7C735ACF}"
 EndProject
@@ -12,19 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F1966D
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF318D15-2D32-4D5A-A32A-63622248ABFA}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.800casting.com/tfs/neurospeech
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = NeuroSpeech.WebAtoms\\NeuroSpeech.WebAtoms.4.5.csproj
-		SccProjectName1 = NeuroSpeech.WebAtoms
-		SccLocalPath1 = NeuroSpeech.WebAtoms
-		SccProjectUniqueName2 = Nuget\\NeuroSpeech.WebAtoms\\NeuroSpeech.WebAtoms.csproj
-		SccProjectName2 = Nuget/NeuroSpeech.WebAtoms
-		SccLocalPath2 = Nuget\\NeuroSpeech.WebAtoms
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -34,12 +27,11 @@ Global
 		{C72D67C1-EC8C-4BEC-A07C-361B7C735ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C72D67C1-EC8C-4BEC-A07C-361B7C735ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C72D67C1-EC8C-4BEC-A07C-361B7C735ACF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB743328-F946-41C0-B498-449FEBE0CADA}
 	EndGlobalSection
 EndGlobal
