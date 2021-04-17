@@ -200,16 +200,16 @@ namespace NeuroSpeech.WebAtoms
 
             if (CDNHost != null)
             {
-                if (p.Contains("?"))
-                {
-                    p += "&_hash=" + v;
-                } else
-                {
-                    p += "?_hash=" + v;
-                }
-                return new HtmlString("//" + CDNHost + "/cached/"  + p);
+                //if (p.Contains("?"))
+                //{
+                //    p += "&_hash=" + v;
+                //} else
+                //{
+                //    p += "?_hash=" + v;
+                //}
+                return new HtmlString($"//{CDNHost}/cached/{v}/{p}");
             }
-            return new HtmlString("/cached/" + v + p);
+            return new HtmlString($"/cached/{v}{p}");
         }
 
         //[Obsolete("Replace with CachedUrl",true)]
