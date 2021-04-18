@@ -207,7 +207,7 @@ namespace NeuroSpeech.WebAtoms
                 //{
                 //    p += "?_hash=" + v;
                 //}
-                return new HtmlString($"//{CDNHost}/cached/{v}{p}");
+                return new HtmlString($"https://{CDNHost}/cached/{v}{p}");
             }
             return new HtmlString($"/cached/{v}{p}");
         }
