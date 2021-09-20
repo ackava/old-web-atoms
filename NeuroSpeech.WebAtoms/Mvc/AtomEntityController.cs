@@ -536,7 +536,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
             return Expression.Lambda(exp,plist).Compile();
         }
 
-        public ActionResult Query(string table, string query, string fields, string orderBy, int start = 0, int size = 10)
+        public virtual ActionResult Query(string table, string query, string fields, string orderBy, int start = 0, int size = 10)
         {
 
             Type type = GetType(this.ObjectContext, table);
@@ -547,7 +547,7 @@ namespace NeuroSpeech.WebAtoms.Mvc
 
         }
 
-        public ActionResult Move(string table, string query, string orderBy, string direction, int index = -1)
+        public virtual ActionResult Move(string table, string query, string orderBy, string direction, int index = -1)
         {
 
             Type type = GetType(this.ObjectContext, table);
@@ -555,33 +555,33 @@ namespace NeuroSpeech.WebAtoms.Mvc
 
         }
 
-        public ActionResult Get(string table, string query, string fields,string orderBy)
+        public virtual ActionResult Get(string table, string query, string fields,string orderBy)
         {
             Type type = GetType(this.ObjectContext, table);
 
             return (ActionResult)InvokeGeneric( "GetEntity", type, query, fields, orderBy);
         }
 
-        public ActionResult BulkSave(string table) {
+        public virtual ActionResult BulkSave(string table) {
             Type type = GetType(this.ObjectContext, table);
             return (ActionResult)InvokeGeneric( "BulkSaveEntity", type);
         }
 
-        public ActionResult Save(string table)
+        public virtual ActionResult Save(string table)
         {
             Type type = GetType(this.ObjectContext, table);
             //return (ActionResult)GetType().GetMethod("SaveEntity").MakeGenericMethod(type).Invoke(this, new object[] { });
             return (ActionResult)InvokeGeneric( "SaveEntity", type);
         }
 
-        public ActionResult BulkDelete(string table)
+        public virtual ActionResult BulkDelete(string table)
         {
             Type type = GetType(this.ObjectContext, table);
             //return (ActionResult)GetType().GetMethod("BulkDeleteEntity").MakeGenericMethod(type).Invoke(this, new object[] { });
             return (ActionResult)InvokeGeneric( "BulkDeleteEntity", type);
         }
 
-        public ActionResult Delete(string table)
+        public virtual ActionResult Delete(string table)
         {
             Type type = GetType(this.ObjectContext, table);
             //return (ActionResult)GetType().GetMethod("DeleteEntity").MakeGenericMethod(type).Invoke(this, new object[] { });
